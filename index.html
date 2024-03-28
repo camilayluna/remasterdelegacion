@@ -409,8 +409,7 @@ window.onload = function() {
         }
 
         // Función para exportar a Excel solo los datos de hoy
-        function exportToExcelHoy() {
-   
+      function exportToExcelHoy() {
     console.log("Exportando a Excel...");
 
     // Obtener la fecha ingresada en el campo
@@ -437,18 +436,16 @@ window.onload = function() {
     }
 }
 
-
-    // Verificar si se encontraron formularios para la fecha ingresada
-    if (formulariosFecha.length > 0) {
-        console.log("Formularios encontrados para la fecha:", formulariosFecha);
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(formulariosFecha);
-        XLSX.utils.book_append_sheet(wb, ws, "Formularios");
-        XLSX.writeFile(wb, "formularios_hoy.xlsx");
-    } else {
-        console.log('No hay formularios para la fecha seleccionada');
-        alert('No hay formularios para la fecha seleccionada');
+// Función para obtener los formularios desde una fecha específica
+function obtenerFormulariosDesdeFecha(fechaInicio) {
+    const formulariosDesdeFecha = [];
+    for (const key in formularios) {
+        const formulario = formularios[key];
+        if (formulario.fecha >= fechaInicio) {
+            formulariosDesdeFecha.push(formulario);
+        }
     }
+    return formulariosDesdeFecha;
 }
 
 
