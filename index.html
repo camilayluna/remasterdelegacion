@@ -410,26 +410,43 @@ window.onload = function() {
 
         // Función para exportar a Excel solo los datos de hoy
         function exportToExcelHoy() {
-             console.log("Exportando a Excel...");
-            const fechaInput = document.getElementById('fecha').value;
-            const fecha = new Date(fechaInput);
-            const formulariosFecha = [];
-            for (const key in formularios) {
-                const formulario = formularios[key];
-                const fechaFormulario = new Date(formulario.fecha);
-                if (fechaFormulario.toDateString() === fecha.toDateString()) {
-                    formulariosFecha.push(formulario);
-                }
-            }
-            if (formulariosFecha.length > 0) {
-                const wb = XLSX.utils.book_new();
-                const ws = XLSX.utils.json_to_sheet(formulariosFecha);
-                XLSX.utils.book_append_sheet(wb, ws, "Formularios");
-                XLSX.writeFile(wb, "formularios_hoy.xlsx");
-            } else {
-                alert('No hay formularios para la fecha seleccionada');
-            }
+    console.log("Exportando a Excel...");
+
+    // Obtener la fecha ingresada en el campo
+    const fechaInput = document.getElementById('fecha').value;
+    console.log("Fecha ingresada:", fechaInput);
+
+    // Convertir la fecha a un objeto Date
+    const fecha = new Date(fechaInput);
+
+    // Crear un array para almacenar los formularios encontrados para la fecha ingresada
+    const formulariosFecha = [];
+
+    // Recorrer todos los formularios y filtrar los que coincidan con la fecha ingresada
+    for (const key in formularios) {
+        const formulario = formularios[key];
+        const fechaFormulario = new Date(formulario.fecha);
+        console.log("Fecha del formulario:", fechaFormulario.toDateString());
+
+        // Verificar si la fecha del formulario coincide con la fecha ingresada
+        if (fechaFormulario.toDateString() === fecha.toDateString()) {
+            formulariosFecha.push(formulario);
         }
+    }
+
+    // Verificar si se encontraron formularios para la fecha ingresada
+    if (formulariosFecha.length > 0) {
+        console.log("Formularios encontrados para la fecha:", formulariosFecha);
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.json_to_sheet(formulariosFecha);
+        XLSX.utils.book_append_sheet(wb, ws, "Formularios");
+        XLSX.writeFile(wb, "formularios_hoy.xlsx");
+    } else {
+        console.log('No hay formularios para la fecha seleccionada');
+        alert('No hay formularios para la fecha seleccionada');
+    }
+}
+
 
         // Función para borrar todos los formularios
         function borrar() {
