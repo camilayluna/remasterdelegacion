@@ -410,6 +410,7 @@ window.onload = function() {
 
         // Función para exportar a Excel solo los datos de hoy
     // Función para exportar a Excel solo los datos desde la fecha ingresada hasta la fecha actual
+// Función para exportar a Excel solo los datos desde la fecha ingresada hasta la fecha actual
 function exportToExcelHoy() {
     console.log("Exportando a Excel...");
 
@@ -422,11 +423,14 @@ function exportToExcelHoy() {
         return;
     }
 
+    // Obtener la fecha actual
+    const fechaActual = new Date();
+
     // Convertir la fecha de inicio a un objeto Date
     const fechaInicioDate = new Date(fechaInicio);
 
-    // Obtener la fecha actual
-    const fechaActual = new Date();
+    // Ajustar la fecha de inicio para incluir toda la fecha del día
+    fechaInicioDate.setHours(0, 0, 0, 0);
 
     // Crear un array para almacenar los formularios encontrados desde la fecha ingresada hasta la fecha actual
     const formulariosDesdeFecha = [];
@@ -435,6 +439,9 @@ function exportToExcelHoy() {
     for (const key in formularios) {
         const formulario = formularios[key];
         const fechaFormulario = new Date(formulario.fecha);
+
+        // Ajustar la fecha del formulario para incluir toda la fecha del día
+        fechaFormulario.setHours(0, 0, 0, 0);
 
         // Verificar si la fecha del formulario está en el rango de fechas
         if (fechaFormulario >= fechaInicioDate && fechaFormulario <= fechaActual) {
@@ -454,6 +461,7 @@ function exportToExcelHoy() {
         alert('No hay formularios en el rango de fechas seleccionado');
     }
 }
+
 
 
         // Función para borrar todos los formularios
