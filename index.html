@@ -410,6 +410,7 @@ window.onload = function() {
 
         // Función para exportar a Excel solo los datos de hoy
         function exportToExcelHoy() {
+             console.log("Exportando a Excel...");
             const fechaInput = document.getElementById('fecha').value;
             const fecha = new Date(fechaInput);
             const formulariosFecha = [];
