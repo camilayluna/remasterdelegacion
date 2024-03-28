@@ -15,15 +15,16 @@
     <button id="btn_agregar" onclick="agregarExcel()">Agregar</button>
     <button id="btn_borrar" onclick="borrarExcel()">Borrar Todos</button>
     <textarea id="excelTextarea" rows="10" cols="50"></textarea> <!-- Cambiado a textarea para mostrar la lista -->
+      <input type="text" id="filtroInput" placeholder="Filtrar por tarea o fecha">
+    <button id="btn_buscar" onclick="buscarInfo()">Buscar</button>
+    <button id="btn_descargar" onclick="descargarExcel()">Descargar</button>
     <table id="infoTable">
         <thead>
             <tr id="tableHeaders"></tr>
         </thead>
         <tbody id="infoBody"></tbody>
     </table>
-    <input type="text" id="filtroInput" placeholder="Filtrar por tarea o fecha">
-    <button id="btn_buscar" onclick="buscarInfo()">Buscar</button>
-    <button id="btn_descargar" onclick="descargarExcel()">Descargar</button>
+  
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.8/xlsx.full.min.js"></script>
 <script>
