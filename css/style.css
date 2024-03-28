@@ -1,0 +1,219 @@
+/* Estilos CSS */
+
+/* Estilo general */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #47a3ce; /* Azul claro */
+  color: #fffefe;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Estilo del botón */
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #1e90ff; /* Azul francia */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #007bff; /* Azul más oscuro */
+}
+
+/* Estilo del input */
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: calc(100% - 20px);
+  margin-bottom: 10px;
+}
+
+/* Estilo de la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+th {
+  background-color: #1e90ff; /* Azul francia */
+  color: #fff;
+}
+
+/* Estilo de la lista de archivos */
+#excelList {
+  margin-bottom: 20px;
+}
+
+#excelList li {
+  margin-bottom: 5px;
+  color: #fdfeff; /* Azul francia */
+  
+}
+
+/* Estilo del botón de descarga */
+#downloadButton {
+  margin-top: 20px;
+}
+
+/* Estilo del filtro */
+#filtroInput {
+  width: calc(100% - 120px);
+  margin-right: 10px;
+}
+
+/* Estilo del botón de búsqueda */
+#buscarButton {
+  background-color: #1069c2; /* Azul francia */
+  color: #fff;
+  border: #fff;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+#btn_buscar{display: inline-block;
+  padding: 10px 20px;
+  background-color: #1eff29; /* Color de fondo */
+  color: #070707;
+  border: 3px solid #007bff; /* Borde de color azul más oscuro */
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); }
+
+#btn_buscar:hover{
+ padding: 10px 20px;
+    background-color: #15be1d; /* Color de fondo */
+    color: #070707;
+    border: 4px solid #fcfcfd; /* Borde de color azul más oscuro */
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); }
+     
+  #btn_borrar{display: inline-block;
+      padding: 10px 20px;
+      background-color: #fd0202; /* Color de fondo */
+      color: #faf6f6;
+      /* Borde de color azul más oscuro */
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); }
+    
+  #btn_borrar:hover{display: inline-block;
+        padding: 10px 20px;
+        background-color: #ff0303; /* Color de fondo */
+        color: #fff7f7;
+        border: 3px solid #fcfcfd; /* Borde de color azul más oscuro */
+        border-radius: 30px;
+        cursor: pointer;
+        transform: scale(1.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); }
+        /*+++++++++++++++++++++++*/
+        #btn_descargar{display: inline-block;
+          padding: 10px 20px;
+          background-color: #ffffff; /* Color de fondo */
+          color: #0a06ff;
+          /* Borde de color azul más oscuro */
+          border-radius: 30px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); }
+        
+      #btn_descargar:hover{display: inline-block;
+            padding: 10px 20px;
+            background-color: #2903ff; /* Color de fondo */
+            color: #fff7f7;
+            border: 3px solid #fcfcfd; /* Borde de color azul más oscuro */
+            border-radius: 30px;
+            cursor: pointer;
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); }
+            /*+++++++++++++++++++++++*/
+
+            #btn_agregar{display: inline-block;
+              padding: 10px 20px;
+              background-color: #050505; /* Color de fondo */
+              color: #faf6f6;
+              border: 3px solid #fcfcfd;/* Borde de color azul más oscuro */
+              border-radius: 30px;
+              cursor: pointer;
+              transition: background-color 0.3s ease;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); }
+            
+          #btn_agregar:hover{display: inline-block;
+                padding: 10px 20px;
+                background-color: #08a066; /* Color de fondo */
+                color: #fff7f7;
+                border: 3px solid #040405; /* Borde de color azul más oscuro */
+                border-radius: 30px;
+                cursor: pointer;
+                transform: scale(1.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); }
+
+                /*+++++++++++++++++++++++*/
+
+            #excelInput{display: inline-block;
+              padding: 10px 20px;
+              background-color: #74716fa6; /* Color de fondo */
+              color: #fdae04;
+              border: 3px solid #fcfcfd;/* Borde de color azul más oscuro */
+              border-radius: 30px;
+              
+              transition: background-color 0.3s ease;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sombra negra */}
+            
+          #excelInput:hover{display: inline-block;
+                padding: 10px 20px;
+                background-color: #08a066; /* Color de fondo */
+                color: #fff7f7;
+                border: 2px solid #040405; /* Borde de color azul más oscuro */
+                border-radius: 30px;
+                
+               
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); }
+                #filtroInput{
+                  border: 2px solid #060607;
+                  border-radius: 20px;
+                }
+
+
+
+#buscarButton:hover {
+  background-color: #007bff; /* Azul más oscuro */
+}
+
+
+/* Estilo de la imagen de fondo */
+.imagen-background {
+  width: 100%;
+  height: 15vh; /* 10% de la altura de la ventana */
+  overflow: hidden; /* Evita que la imagen se desborde */
+  border: 4px solid #1e90ff; /* Borde azul */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sombra negra */
+}
+
+.imagen-background img {
+  width: 100%; /* Ancho completo del contenedor */
+  height: 100%; /* Altura del 100% del contenedor */
+  object-fit: cover; /* Ajusta la imagen manteniendo su relación de aspecto */
+}
+.main-content{margin-top: 30px;}

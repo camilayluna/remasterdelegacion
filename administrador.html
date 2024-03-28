@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administrador de Archivos Excel</title>
+<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<div class="imagen-background">
+    <img src="./img/arroyo-el-pescado.jpeg" alt="">
+</div>
+<div class="main-content">
+    <input type="file" id="excelInput" accept=".xlsx" multiple>
+    <button id="btn_agregar" onclick="agregarExcel()">Agregar</button>
+    <button id="btn_borrar" onclick="borrarExcel()">Borrar Todos</button>
+    <textarea id="excelTextarea" rows="10" cols="50"></textarea> <!-- Cambiado a textarea para mostrar la lista -->
+    <table id="infoTable">
+        <thead>
+            <tr id="tableHeaders"></tr>
+        </thead>
+        <tbody id="infoBody"></tbody>
+    </table>
+    <input type="text" id="filtroInput" placeholder="Filtrar por tarea o fecha">
+    <button id="btn_buscar" onclick="buscarInfo()">Buscar</button>
+    <button id="btn_descargar" onclick="descargarExcel()">Descargar</button>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.8/xlsx.full.min.js"></script>
+<script>
+    let excelData = [];
+
+    function agregarExcel() {
+        const excelInput = document.getElementById('excelInput');
+        const files = excelInput.files;
+
+        if (files.length === 0) {
+            alert('Por favor selecciona al menos un archivo Excel.');
+            return;
+        }
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            if (!excelData.some(data => data.name === file.name)) {
+                excelData.push(file);
+                const excelTextarea = document.getElementById('excelTextarea');
+                excelTextarea.value += file.name + '\n'; // Agregar nombre del archivo al textarea
+            } else {
+                alert('Ya has agregado el archivo ' + file.name);
+            }
+        }
+    }
+
+    function borrarExcel() {
+        excelData = [];
+        document.getElementById('excelTextarea').value = ''; // Limpiar el textarea
+        document.getElementById('infoBody').innerHTML = '';
+    }
+
+    function buscarInfo() {
+    const filtro = document.getElementById('filtroInput').value.toLowerCase();
+    const infoBody = document.getElementById('infoBody');
+    infoBody.innerHTML = '';
+
+    if (excelData.length === 0) {
+        alert('No hay archivos Excel para buscar.');
+        return;
+    }
+
+    const filteredData = []; // Almacenar los datos que coinciden con el filtro
+
+    for (const file of excelData) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const data = event.target.result;
+            const workbook = XLSX.read(data, { type: 'binary' });
+            workbook.SheetNames.forEach(sheetName => {
+                const sheet = workbook.Sheets[sheetName];
+                const jsonData = XLSX.utils.sheet_to_json(sheet);
+                jsonData.forEach(row => {
+                    // Filtrar según el criterio de búsqueda
+                    if (Object.values(row).some(value => value.toLowerCase().includes(filtro))) {
+                        filteredData.push(row); // Agregar datos que coinciden con el filtro
+                    }
+                });
+            });
+        };
+        reader.onloadend = function() {
+            if (excelData.indexOf(file) === excelData.length - 1) {
+                // Mostrar solo los datos filtrados sin repetir el número de reclamo
+                const uniqueData = eliminarDuplicados(filteredData);
+                const fieldNames = Object.keys(uniqueData[0]);
+                const tableHeaders = document.getElementById('tableHeaders');
+                tableHeaders.innerHTML = '';
+                fieldNames.forEach(fieldName => {
+                    const th = document.createElement('th');
+                    th.textContent = fieldName;
+                    tableHeaders.appendChild(th);
+                });
+                uniqueData.forEach(row => {
+                    const tr = document.createElement('tr');
+                    fieldNames.forEach(fieldName => {
+                        const td = document.createElement('td');
+                        td.textContent = row[fieldName] || '';
+                        tr.appendChild(td);
+                    });
+                    infoBody.appendChild(tr);
+                });
+            }
+        };
+        reader.readAsBinaryString(file);
+    }
+}
+
+
+    function descargarExcel() {
+    const filtro = document.getElementById('filtroInput').value.toLowerCase();
+    let filteredData = [];
+
+    if (excelData.length === 0) {
+        alert('No hay archivos Excel para descargar.');
+        return;
+    }
+
+    for (const file of excelData) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const data = event.target.result;
+            const workbook = XLSX.read(data, { type: 'binary' });
+            workbook.SheetNames.forEach(sheetName => {
+                const sheet = workbook.Sheets[sheetName];
+                const jsonData = XLSX.utils.sheet_to_json(sheet);
+                jsonData.forEach(row => {
+                    Object.entries(row).forEach(([key, value]) => {
+                        if (value && value.toLowerCase().includes(filtro)) {
+                            filteredData.push(row);
+                        }
+                    });
+                });
+            });
+        };
+        reader.onloadend = function() {
+            if (excelData.indexOf(file) === excelData.length - 1) {
+                const uniqueData = eliminarDuplicados(filteredData);
+                const worksheet = XLSX.utils.json_to_sheet(uniqueData);
+                const newWorkbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(newWorkbook, worksheet, 'Datos Filtrados');
+                XLSX.writeFile(newWorkbook, 'datos_filtrados.xlsx');
+            }
+        };
+        reader.readAsBinaryString(file);
+    }
+}
+
+
+    function eliminarDuplicados(data) {
+        const uniqueData = [];
+        const keys = {};
+
+        for (const row of data) {
+            const key = JSON.stringify(row);
+            if (!keys[key]) {
+                keys[key] = true;
+                uniqueData.push(row);
+            }
+        }
+
+        return uniqueData;
+    }
+</script>
+</body>
+</html>
