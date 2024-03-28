@@ -409,25 +409,40 @@ window.onload = function() {
         }
 
         // Función para exportar a Excel solo los datos de hoy
-     function exportToExcelHoy() {
+    // Función para exportar a Excel solo los datos desde la fecha ingresada hasta la fecha actual
+function exportToExcelHoy() {
     console.log("Exportando a Excel...");
 
-    // Obtener la fecha seleccionada del campo de fecha
-    const fechaInput = document.getElementById('fecha').value;
+    // Obtener la fecha ingresada en el campo
+    const fechaInicio = document.getElementById('fecha').value;
 
-    // Verificar si se ha seleccionado una fecha
-    if (!fechaInput) {
-        alert("Debe seleccionar una fecha.");
+    // Verificar si se ha ingresado una fecha
+    if (!fechaInicio) {
+        alert("Debe ingresar una fecha.");
         return;
     }
 
-    // Crear un objeto Date a partir de la fecha seleccionada
-    const fecha = new Date(fechaInput);
+    // Convertir la fecha de inicio a un objeto Date
+    const fechaInicioDate = new Date(fechaInicio);
 
-    // Crear un array para almacenar los formularios encontrados desde la fecha seleccionada
-    const formulariosDesdeFecha = obtenerFormulariosDesdeFecha(fecha);
+    // Obtener la fecha actual
+    const fechaActual = new Date();
 
-    // Verificar si se encontraron formularios para la fecha seleccionada
+    // Crear un array para almacenar los formularios encontrados desde la fecha ingresada hasta la fecha actual
+    const formulariosDesdeFecha = [];
+
+    // Recorrer todos los formularios y filtrar los que estén en el rango de fechas
+    for (const key in formularios) {
+        const formulario = formularios[key];
+        const fechaFormulario = new Date(formulario.fecha);
+
+        // Verificar si la fecha del formulario está en el rango de fechas
+        if (fechaFormulario >= fechaInicioDate && fechaFormulario <= fechaActual) {
+            formulariosDesdeFecha.push(formulario);
+        }
+    }
+
+    // Verificar si se encontraron formularios para el rango de fechas
     if (formulariosDesdeFecha.length > 0) {
         console.log("Formularios encontrados desde la fecha:", formulariosDesdeFecha);
         const wb = XLSX.utils.book_new();
@@ -435,25 +450,10 @@ window.onload = function() {
         XLSX.utils.book_append_sheet(wb, ws, "Formularios");
         XLSX.writeFile(wb, "formularios_desde_fecha.xlsx");
     } else {
-        console.log('No hay formularios desde la fecha seleccionada');
-        alert('No hay formularios desde la fecha seleccionada');
+        console.log('No hay formularios en el rango de fechas seleccionado');
+        alert('No hay formularios en el rango de fechas seleccionado');
     }
-// Función para obtener formularios desde una fecha específica
-function obtenerFormulariosDesdeFecha(fechaInicio) {
-    const formulariosDesdeFecha = [];
-    for (const key in formularios) {
-        const formulario = formularios[key];
-        const fechaFormulario = new Date(formulario.fecha);
-        const fechaInicioDate = new Date(fechaInicio);
-        if (fechaFormulario >= fechaInicioDate) {
-            formulariosDesdeFecha.push(formulario);
-        }
-    }
-    return formulariosDesdeFecha;
 }
-
-     }
-
 
 
         // Función para borrar todos los formularios
