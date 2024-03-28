@@ -438,7 +438,21 @@ window.onload = function() {
         console.log('No hay formularios desde la fecha seleccionada');
         alert('No hay formularios desde la fecha seleccionada');
     }
+// Función para obtener formularios desde una fecha específica
+function obtenerFormulariosDesdeFecha(fechaInicio) {
+    const formulariosDesdeFecha = [];
+    for (const key in formularios) {
+        const formulario = formularios[key];
+        const fechaFormulario = new Date(formulario.fecha);
+        const fechaInicioDate = new Date(fechaInicio);
+        if (fechaFormulario >= fechaInicioDate) {
+            formulariosDesdeFecha.push(formulario);
+        }
+    }
+    return formulariosDesdeFecha;
 }
+
+     }
 
 
 
