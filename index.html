@@ -410,29 +410,33 @@ window.onload = function() {
 
         // Función para exportar a Excel solo los datos de hoy
         function exportToExcelHoy() {
+   
     console.log("Exportando a Excel...");
 
     // Obtener la fecha ingresada en el campo
-    const fechaInput = document.getElementById('fecha').value;
-    console.log("Fecha ingresada:", fechaInput);
+    const fechaInicio = prompt("Ingrese la fecha de inicio (YYYY-MM-DD):");
 
-    // Convertir la fecha a un objeto Date
-    const fecha = new Date(fechaInput);
-
-    // Crear un array para almacenar los formularios encontrados para la fecha ingresada
-    const formulariosFecha = [];
-
-    // Recorrer todos los formularios y filtrar los que coincidan con la fecha ingresada
-    for (const key in formularios) {
-        const formulario = formularios[key];
-        const fechaFormulario = new Date(formulario.fecha);
-        console.log("Fecha del formulario:", fechaFormulario.toDateString());
-
-        // Verificar si la fecha del formulario coincide con la fecha ingresada
-        if (fechaFormulario.toDateString() === fecha.toDateString()) {
-            formulariosFecha.push(formulario);
-        }
+    if (!fechaInicio) {
+        alert("Debe ingresar una fecha.");
+        return;
     }
+
+    // Crear un array para almacenar los formularios encontrados desde la fecha ingresada
+    const formulariosDesdeFecha = obtenerFormulariosDesdeFecha(fechaInicio);
+
+    // Verificar si se encontraron formularios para la fecha ingresada
+    if (formulariosDesdeFecha.length > 0) {
+        console.log("Formularios encontrados desde la fecha:", formulariosDesdeFecha);
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.json_to_sheet(formulariosDesdeFecha);
+        XLSX.utils.book_append_sheet(wb, ws, "Formularios");
+        XLSX.writeFile(wb, "formularios_desde_fecha.xlsx");
+    } else {
+        console.log('No hay formularios desde la fecha seleccionada');
+        alert('No hay formularios desde la fecha seleccionada');
+    }
+}
+
 
     // Verificar si se encontraron formularios para la fecha ingresada
     if (formulariosFecha.length > 0) {
