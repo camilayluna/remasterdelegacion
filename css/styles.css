@@ -22,7 +22,7 @@ body {
     width: 100%; /* Ajustar el ancho al 100% del contenedor */
     height: auto; /* Mantener la altura proporcional */
 }
-
+#direccion{color:#fafdfa}
 /* Pseudo-elemento para la sombra inferior */
 body::before {
     content: '';
